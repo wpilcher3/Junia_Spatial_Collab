@@ -7,7 +7,7 @@ Seurat/R: docker.io/wcp7un/mmrf_race_docker_r:v4.4.1_d110525
 
 The .devcontainer directory includes files for launching an interactive environment inside the above containers using the vscode devcontainer plugin. Update mount paths in .devcontainer/Python/devcontainer.json and .devcontainer/R/devcontainer.json as needed. 
 
-This repository uses some auto generated code to quickly screen and test analysis strategies. Use results at your own peril.
+This repository uses some auto generated code based off of hand crafted templates w/ claude to quickly screen and test analysis strategies. Use results at your own peril.
 
 source/Helper_Functions contains various functions for repetitive analyses.
 source/Convert_R_Object_To_Scanpy.R takes a Seurat object and converts it to an .h5ad file for anlaysis with Scanpy.
