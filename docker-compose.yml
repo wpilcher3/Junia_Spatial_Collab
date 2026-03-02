@@ -1,0 +1,19 @@
+services:
+    r-dev:
+      build:
+        context: ./.devcontainer/R/
+        dockerfile: ./.devcontainer/R/Dockerfile
+      volumes:
+        - ./:/workspace:cached
+        - /opt/megaseq-data/wcpilch/MMRF-ImmuneAtlas-Analysis-Sync/data/:/workspace/data:cached
+        - /opt/megaseq-data/wcpilch/MMRF-ImmuneAtlas-Analysis-Sync/output/:/workspace/output:cached
+      command: sleep infinity
+    scanpy-dev:
+      build:
+        context: ./.devcontainer/Python/
+        dockerfile: ./.devcontainer/Python/Dockerfile
+      volumes:
+        - ./:/workspace:cached
+        - /opt/megaseq-data/wcpilch/MMRF-ImmuneAtlas-Analysis-Sync/data/:/workspace/data:cached
+        - /opt/megaseq-data/wcpilch/MMRF-ImmuneAtlas-Analysis-Sync/output/:/workspace/output:cached
+      command: sleep infinity
