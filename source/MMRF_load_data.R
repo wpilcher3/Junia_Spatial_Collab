@@ -11,7 +11,7 @@ options(future.globals.maxSize = 600 * 1024^3)
 source("source/Helper_Functions/general.R", chdir = T)
 MEGASEQ <- T
 dataPath <- "data/"
-output <- file.path("output", "Junia_Spatial")
+output <- file.path("output", "Junia_Spatial_Analyses")
 
 dir.create(output, recursive = T)
 # objectPath <- "INTEGRATED_OBJECTS_MMRF/Integration/SeuratObj_rm38_44_in_361_samples_Human_Ref_SM_CB_LogNorm_PC25_Harmony_singleR_doublet.rds"

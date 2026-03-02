@@ -1007,7 +1007,7 @@ def create_survival_vs_deg_scatterplot_with_labels(cox_results, deg_results, cox
     return merged_df
 
 
-def ulm_pathway_cox_analysis(adata, ulm_obsm_key='score_ulm', covariates=['Study_Site'],
+def ulm_pathway_cox_analysis(adata, ulm_obsm_key='score_ulm', covariates=['Study_Site'], sample_id="public_id",
                               min_patients=20, verbose=True):
     """
     Perform Cox regression across all ULM pathway scores
@@ -1040,7 +1040,7 @@ def ulm_pathway_cox_analysis(adata, ulm_obsm_key='score_ulm', covariates=['Study
     
     # Prepare base survival dataframe
     survival_df = pd.DataFrame({
-        'public_id': adata.obs['public_id'].values,
+        'public_id': adata.obs[sample_id].values,
         'ttcpfs': pd.to_numeric(adata.obs['ttcpfs'], errors='coerce'),
         'censpfs': pd.to_numeric(adata.obs['censpfs'], errors='coerce')
     })
@@ -1078,17 +1078,17 @@ def ulm_pathway_cox_analysis(adata, ulm_obsm_key='score_ulm', covariates=['Study
         try:
             # Create analysis dataframe for this pathway
             pathway_df = survival_df.copy()
-            
             # Get ULM scores for patients with survival data
+
             pathway_scores = ulm_scores.loc[survival_df['public_id'].values, pathway].values
-            
+
             # Z-score the pathway scores
             pathway_df['pathway_score_z'] = zscore(pathway_scores, nan_policy='omit')
-            
+
             # Process covariates: z-score continuous, dummy encode categorical
             analysis_df = pathway_df.copy()
             model_cols = ['ttcpfs', 'censpfs', 'pathway_score_z']
-
+            
             for cov in covariates:
                 if cov not in analysis_df.columns:
                     continue
@@ -1105,6 +1105,7 @@ def ulm_pathway_cox_analysis(adata, ulm_obsm_key='score_ulm', covariates=['Study
                     scaled_col_name = f'scaled_{cov}'
                     analysis_df[scaled_col_name] = zscore(analysis_df[cov].values, nan_policy='omit')
                     model_cols.append(scaled_col_name)
+
 
             # Select final dataset
             final_df = analysis_df[model_cols].dropna()
