@@ -95,4 +95,4 @@ cluster_naming <- dplyr::left_join(cluster_naming, lineage_label, by = "lineage_
 # merged@meta.data$lineage_group <- factor(merged@meta.data$lineage_group, levels = c("CD4", "CD8", "B", "M", "Nk", "P", "E", "Other", "LQ"))
 
 
-source("source/Race/colors_and_panel_sizes.R", local = T)
+source("source/colors_and_panel_sizes.R", local = T)

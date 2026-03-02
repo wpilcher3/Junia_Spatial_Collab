@@ -93,7 +93,6 @@ perform_gene_survival_analysis <- function(sce_object = NULL, gene_name = NULL, 
                     covar_str <- paste(covars, collapse = " + ")
                     formula_str <- paste("Surv(", time_col, ",", event_col, ") ~ expr_group +", covar_str)
                 }
-
                 tryCatch(
                     {
                         cox_model <- coxph(as.formula(formula_str), data = data)
@@ -167,7 +166,7 @@ perform_gene_survival_analysis <- function(sce_object = NULL, gene_name = NULL, 
     } else if (cutpoint_method == "optimal") {
         p_boxplot <- p_boxplot +
             geom_hline(yintercept = cutpoints$all, linetype = "dashed", color = "black", size = 1) +
-            annotate("text", x = 1.5, y = cutpoints$all, label = "All Patients", vjust = -0.5) +
+            annotate("text", x = 1.5, y = cutpoints$all, label = "All Patients", vjust = -0.5) 
     }
 
 

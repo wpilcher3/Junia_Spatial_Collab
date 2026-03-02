@@ -77,4 +77,4 @@ merged@meta.data <- merged@meta.data %>% mutate(isDoublet = dplyr::case_when(
 ))
 
 
-source("source/Race/colors_and_panel_sizes.R", local = T)
+source("source/colors_and_panel_sizes.R", local = T)

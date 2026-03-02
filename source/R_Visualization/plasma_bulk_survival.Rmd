@@ -63,7 +63,6 @@ floral_fill_theme <- floral_color_theme
 
 ```{r}
 analysis_name <- "Plasma_Cells_bulkRNA"
-
 h5ad_file <- file.path(output, "Plasma_Cells", analysis_name, paste0(analysis_name, "_pydeseq2_filtered_pseudobulked.h5ad"))
 # custom_sig_gsva <- file.path(nk_cell_output_path, top_dir, analysis_name, paste0(analysis_name, "_custom_pathways_ulm_scores.csv"))
 
@@ -73,6 +72,11 @@ h5ad_file <- file.path(output, "Plasma_Cells", analysis_name, paste0(analysis_na
 
 
 ```{r}
+packages <- "anndataR"
+not_installed <- packages[!(packages %in% installed.packages()[ , "Package"])]    # Extract not installed packages
+if(length(not_installed)) remotes::install_github("scverse/anndataR@084a1878c733f0cd7a680bef6a8c52bf1b0f0844", upgrade = "never") # version 0.2 for R 4.4.1
+
+
 library(anndataR) # scverse/anndataR@084a1878c733f0cd7a680bef6a8c52bf1b0f0844 - version 0.2 for R 4.4.1
 adata <- read_h5ad(h5ad_file, mode = "r")
 ```
@@ -81,7 +85,15 @@ adata <- read_h5ad(h5ad_file, mode = "r")
 ```{r}
 sce <- adata$as_SingleCellExperiment()
 
-test_output <- perform_gene_survival_analysis(sce, gene_name = "ENSG00000167900", covariates = ("d_dx_amm_age","d_amm_tx_asct_1st",  "d_pt_sex"), cutpoint_method = "optimal")
+sce_subset <- sce[, !is.na(colData(sce)$d_dx_amm_age) & !is.na(colData(sce)$d_amm_tx_asct_1st) & !is.na(colData(sce)$d_pt_sex) & !is.na(colData(sce)$ttcpfs)]
+test_output <- perform_gene_survival_analysis(sce_subset, gene_name = "ENSG00000167900", covariates = c("d_dx_amm_age","d_amm_tx_asct_1st",  "d_pt_sex"), cutpoint_method = "optimal")
+test_output
+
+```
+
+# TK1 Median
+```{r}
+test_output <- perform_gene_survival_analysis(sce_subset, gene_name = "ENSG00000167900", covariates = c("d_dx_amm_age","d_amm_tx_asct_1st",  "d_pt_sex"), cutpoint_method = "median")
 test_output
 
 ```
