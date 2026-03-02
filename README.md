@@ -1,7 +1,7 @@
 # Junia_Spatial_Collab
 Misc scripts for analysis
 
-This project uses the following docker images with all required dependencies preinstalled
+This project uses the following docker images with all required dependencies (except pyreadr) preinstalled
 Scanpy/Python: docker.io/wcp7un/mmrf_race_docker_python:v3.13_d120225b
 Seurat/R: docker.io/wcp7un/mmrf_race_docker_r:v4.4.1_d110525
 
